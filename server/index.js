@@ -38,6 +38,39 @@ app.post("/profiles", async (req, res) => {
   }
 });
 
+/* ADD LIKE TO DATABASE */
+app.post("/like", async (req, res) => {
+  try{
+    const { fromID, toID } = req.body;
+    // You can't like yourself
+    if(fromID === toID){
+      return res.status(400).json({ message: "You cannot like yourself" });
+    }
+    // Create like
+    await prisma.like.create({
+      data: {
+        fromID,
+        toID,
+      }
+    })
+    // Check if reverse like exists
+    const reverse = await prisma.like.findFirst({
+      where: {
+        fromID: Number(toID),
+        toID: Number(fromID),
+      }
+    })
+    if(reverse){
+      return res.json({ match: true, message: "It's a match!!!"})
+    }
+    return res.json({ match: false, message:"Liked!"})
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).json({ message: "Already liked or error"});
+  }
+})
+
 /* GET ALL PROFILES */
 app.get("/profiles", async (req, res) => {
   const profiles = await prisma.profile.findMany({
