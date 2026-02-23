@@ -13,12 +13,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Like {
+  id        Int      @id @default(autoincrement())
+  fromID    Int
+  toID      Int
+  createdAt DateTime @default(now())
+
+  from Profile @relation("LikesSent", fields: [fromID], references: [id])
+  to   Profile @relation("LikesReceived", fields: [toID], references: [id])
+
+  @@unique([fromID, toID])
+}
+
 model Profile {
   id        Int      @id @default(autoincrement())
   name      String
   age       Int
-  gender    String
-  bio       String
+  gender    String?
+  bio       String?
   email     String   @unique
   createdAt DateTime @default(now())
+
+  likesSent     Like[] @relation("LikesSent")
+  likesReceived Like[] @relation("LikesReceived")
 }
