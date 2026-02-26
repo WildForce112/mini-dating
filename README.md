@@ -14,17 +14,24 @@ Frontend hiện tại mới làm xong phần tạo grid và UI hiển thị danh
 
 ## Cách tổ chức hệ thống
 mini-dating/  
-├── client/ # Frontend React  
-│ ├── public/  
-│ └── src/  
-│ ├── components/  
-│ └── pages/  
-├── server/ # Backend (Express / NodeJS)  
-│ ├── controllers/  
-│ ├── models/  
-│ └── routes/  
+│  
+├── client/                    # Frontend React (Vite)  
+│   ├── src/  
+│   │   ├── components/        # Các component tái sử dụng (UI nhỏ)  
+│   │   ├── pages/             # Các page chính (route level)  
+│   │   ├── App.jsx  
+│   │   └── main.jsx  
+│   ├── package.json  
+│   └── package-lock.json  
+│  
+├── server/                    # Backend NodeJS + Express  
+│   ├── prisma/                # Prisma schema & migrations  
+│   │   └── schema.prisma  
+│   ├── index.js               # Entry point của server  
+│   ├── package.json  
+│   └── package-lock.json  
+│  
 └── README.md  
-
 - **client/** chứa toàn bộ React app UI
 - **server/** là REST API backend xử lý logic match, slot trùng và lưu dữ liệu
 - Dự án sử dụng cấu trúc `client / server` để tách rời UI và backend
@@ -32,11 +39,9 @@ mini-dating/
 ---
 
 ## Bạn lưu data bằng gì?
-Hiện tại dữ liệu được lưu **tạm trong memory / local storage (UI)**  
-Backend có model dữ liệu nhưng **chưa deploy database thực tế**.
-
-- Frontend: nếu cần, data demo được lưu bằng **localStorage**
-- Backend: models có định nghĩa để kết nối database sau này
+- **Backend**: dùng **Prisma ORM** kết nối với **PostgreSQL** để lưu dữ liệu chính của người dùng và các bảng logic match/slots.
+- - PostgreSQL được cấu hình trong `schema.prisma` với `provider = "postgresql"` như phần docs của Prisma khuyến nghị (Prisma ORM hỗ trợ Postgres rất tốt).
+- **Frontend**: chỉ sử dụng **localStorage** để lưu **thông tin đăng nhập gần nhất**, không dùng backend auth session/token lưu trên local.
 
 ## Logic match hoạt động thế nào
 > Hiện tại phần logic match chỉ mới *ý tưởng*, chưa hoàn chỉnh trong bản này.
