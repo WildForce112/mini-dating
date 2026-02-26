@@ -13,18 +13,17 @@ Frontend hiện tại mới làm xong phần tạo grid và UI hiển thị danh
 ---
 
 ## Cách tổ chức hệ thống
-mini-dating/
-├── client/ # Frontend React
-│ ├── public/
-│ └── src/
-│ ├── components/
-│ └── pages/
-├── server/ # Backend (Express / NodeJS)
-│ ├── controllers/
-│ ├── models/
-│ └── routes/
-├── README.md
-└── package.json
+mini-dating/  
+├── client/ # Frontend React  
+│ ├── public/  
+│ └── src/  
+│ ├── components/  
+│ └── pages/  
+├── server/ # Backend (Express / NodeJS)  
+│ ├── controllers/  
+│ ├── models/  
+│ └── routes/  
+└── README.md  
 
 - **client/** chứa toàn bộ React app UI
 - **server/** là REST API backend xử lý logic match, slot trùng và lưu dữ liệu
@@ -60,10 +59,10 @@ Hiện tại UI đã hiển thị grid ngày giờ rảnh nhưng:
 
 **Ý tưởng logic:**
 
-For each slot in userA.slots:
-For each slot in userB.slots:
-If slot.date == slot2.date and slot.time == slot2.time:
-matchedSlots.push(slot)
+For each slot in userA.slots:  
+For each slot in userB.slots:  
+If slot.date == slot2.date and slot.time == slot2.time:  
+matchedSlots.push(slot)  
 
 Nếu có ngày giờ trùng → hiển thị kết quả match.
 
